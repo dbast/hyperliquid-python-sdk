@@ -1,44 +1,27 @@
-default_language_version:
-  python: python3.10
-
-default_stages: [commit, push]
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v5.0.0
     hooks:
+      - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: LICENSE
-
+        exclude: LICENSE.md
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.2
+    hooks:
+      # lint & attempt to correct failures (e.g. pyupgrade)
+      - id: ruff
+        args: [--fix]
+      # compatible replacement for black
+      - id: ruff-format
   - repo: local
     hooks:
-      - id: pyupgrade
-        name: pyupgrade
-        entry: poetry run pyupgrade --py310-plus
-        types: [python]
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy --config-file pyproject.toml ./
+        pass_filenames: false
         language: system
-
-  - repo: local
+  - repo: meta
     hooks:
-      - id: isort
-        name: isort
-        entry: poetry run isort --settings-path pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: black
-        name: black
-        entry: poetry run black --config pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: codestyle
-        name: codestyle
-        entry: make codestyle
-        types: [python]
-        language: system
+      - id: check-hooks-apply
+      - id: check-useless-excludes

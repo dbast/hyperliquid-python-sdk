@@ -67,37 +67,27 @@ pytest-cov = "^4.0.0"
 vcrpy = { version = "^7.0.0", python = "3.10.10" }
 types-requests = "^2.31.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 120
+target-version = "py38"
 
-exclude = '''
-/(
-    \.git
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | env
-    | venv
-)/
-'''
+[tool.ruff.lint]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+ignore = ["E501"]
+# see https://docs.astral.sh/ruff/rules/
+select = [
+    "F",
+    "E",
+    "W",
+    "I",
+    "S",
+    "UP",
+    # "PL"
+]
 
-[tool.isort]
-# https://github.com/timothycrosley/isort/
-py_version = 310
-line_length = 120
-
-known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
-sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
-include_trailing_comma = true
-profile = "black"
-multi_line_output = 3
-indent = 4
-color_output = true
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S"]
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file

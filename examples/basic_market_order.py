@@ -19,9 +19,9 @@ def main():
         for status in order_result["response"]["data"]["statuses"]:
             try:
                 filled = status["filled"]
-                print(f'Order #{filled["oid"]} filled {filled["totalSz"]} @{filled["avgPx"]}')
+                print(f"Order #{filled['oid']} filled {filled['totalSz']} @{filled['avgPx']}")
             except KeyError:
-                print(f'Error: {status["error"]}')
+                print(f"Error: {status['error']}")
 
         print("We wait for 2s before closing")
         time.sleep(2)
@@ -32,9 +32,9 @@ def main():
             for status in order_result["response"]["data"]["statuses"]:
                 try:
                     filled = status["filled"]
-                    print(f'Order #{filled["oid"]} filled {filled["totalSz"]} @{filled["avgPx"]}')
+                    print(f"Order #{filled['oid']} filled {filled['totalSz']} @{filled['avgPx']}")
                 except KeyError:
-                    print(f'Error: {status["error"]}')
+                    print(f"Error: {status['error']}")
 
 
 if __name__ == "__main__":

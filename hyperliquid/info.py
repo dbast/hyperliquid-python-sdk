@@ -40,7 +40,7 @@ class Info(API):
             self.coin_to_asset[spot_info["name"]] = spot_info["index"] + 10000
             self.name_to_coin[spot_info["name"]] = spot_info["name"]
             base, quote = spot_info["tokens"]
-            name = f'{spot_meta["tokens"][base]["name"]}/{spot_meta["tokens"][quote]["name"]}'
+            name = f"{spot_meta['tokens'][base]['name']}/{spot_meta['tokens'][quote]['name']}"
             if name not in self.name_to_coin:
                 self.name_to_coin[name] = spot_info["name"]
 

@@ -1,7 +1,6 @@
 import json
 import logging
 import threading
-import time
 from collections import defaultdict
 
 import websocket
@@ -15,23 +14,23 @@ def subscription_to_identifier(subscription: Subscription) -> str:
     if subscription["type"] == "allMids":
         return "allMids"
     elif subscription["type"] == "l2Book":
-        return f'l2Book:{subscription["coin"].lower()}'
+        return f"l2Book:{subscription['coin'].lower()}"
     elif subscription["type"] == "trades":
-        return f'trades:{subscription["coin"].lower()}'
+        return f"trades:{subscription['coin'].lower()}"
     elif subscription["type"] == "userEvents":
         return "userEvents"
     elif subscription["type"] == "userFills":
-        return f'userFills:{subscription["user"].lower()}'
+        return f"userFills:{subscription['user'].lower()}"
     elif subscription["type"] == "candle":
-        return f'candle:{subscription["coin"].lower()},{subscription["interval"]}'
+        return f"candle:{subscription['coin'].lower()},{subscription['interval']}"
     elif subscription["type"] == "orderUpdates":
         return "orderUpdates"
     elif subscription["type"] == "userFundings":
-        return f'userFundings:{subscription["user"].lower()}'
+        return f"userFundings:{subscription['user'].lower()}"
     elif subscription["type"] == "userNonFundingLedgerUpdates":
-        return f'userNonFundingLedgerUpdates:{subscription["user"].lower()}'
+        return f"userNonFundingLedgerUpdates:{subscription['user'].lower()}"
     elif subscription["type"] == "webData2":
-        return f'webData2:{subscription["user"].lower()}'
+        return f"webData2:{subscription['user'].lower()}"
 
 
 def ws_msg_to_identifier(ws_msg: WsMsg) -> Optional[str]:
@@ -40,27 +39,27 @@ def ws_msg_to_identifier(ws_msg: WsMsg) -> Optional[str]:
     elif ws_msg["channel"] == "allMids":
         return "allMids"
     elif ws_msg["channel"] == "l2Book":
-        return f'l2Book:{ws_msg["data"]["coin"].lower()}'
+        return f"l2Book:{ws_msg['data']['coin'].lower()}"
     elif ws_msg["channel"] == "trades":
         trades = ws_msg["data"]
         if len(trades) == 0:
             return None
         else:
-            return f'trades:{trades[0]["coin"].lower()}'
+            return f"trades:{trades[0]['coin'].lower()}"
     elif ws_msg["channel"] == "user":
         return "userEvents"
     elif ws_msg["channel"] == "userFills":
-        return f'userFills:{ws_msg["data"]["user"].lower()}'
+        return f"userFills:{ws_msg['data']['user'].lower()}"
     elif ws_msg["channel"] == "candle":
-        return f'candle:{ws_msg["data"]["s"].lower()},{ws_msg["data"]["i"]}'
+        return f"candle:{ws_msg['data']['s'].lower()},{ws_msg['data']['i']}"
     elif ws_msg["channel"] == "orderUpdates":
         return "orderUpdates"
     elif ws_msg["channel"] == "userFundings":
-        return f'userFundings:{ws_msg["data"]["user"].lower()}'
+        return f"userFundings:{ws_msg['data']['user'].lower()}"
     elif ws_msg["channel"] == "userNonFundingLedgerUpdates":
-        return f'userNonFundingLedgerUpdates:{ws_msg["data"]["user"].lower()}'
+        return f"userNonFundingLedgerUpdates:{ws_msg['data']['user'].lower()}"
     elif ws_msg["channel"] == "webData2":
-        return f'webData2:{ws_msg["data"]["user"].lower()}'
+        return f"webData2:{ws_msg['data']['user'].lower()}"
 
 
 class WebsocketManager(threading.Thread):
